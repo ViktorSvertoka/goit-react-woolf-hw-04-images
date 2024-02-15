@@ -11,3 +11,7 @@
 
 - Створений репозиторій `goit-react-woolf-hw-04-images`.
 - Проведи рефакторинг коду завдання, використовуючи React-хуки.
+
+### Фінальний результат
+
+![screencapture](./assets/screencapture.png)
