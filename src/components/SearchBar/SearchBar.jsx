@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import {
   SearchForm,
@@ -8,49 +8,43 @@ import {
   SearchLogo,
 } from './SearchBar.styled';
 
-class SearchBar extends Component {
-  state = {
-    searchName: '',
-    inputValue: '',
-  };
+const SearchBar = ({ onSubmit }) => {
+  const [searchName, setSearchName] = useState('');
+  const [inputValue, setInputValue] = useState('');
 
-  handleChange = event => {
-    this.setState({ inputValue: event.target.value });
-  };
+  const handleChange = event => setInputValue(event.target.value);
 
-  handleSubmit = event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    const searchQuery = event.target.elements.searchName.value.trim();
-    this.props.onSubmit(searchQuery);
+    setSearchName(inputValue.trim());
+    onSubmit(searchName);
     event.target.reset();
   };
 
-  render() {
-    return (
-      <header>
-        <SearchForm onSubmit={this.handleSubmit}>
-          <a href="https://pixabay.com/" target="_blank" rel="noreferrer">
-            <SearchLogo
-              src={require('./pixabay-logo.png')}
-              alt="logo"
-              width="200"
-            />
-          </a>
-          <SearchButton>
-            <BsSearch />
-            <SearchSpan>Search</SearchSpan>
-          </SearchButton>
-          <SearchInput
-            name="searchName"
-            type="text"
-            id="search"
-            value={this.state.inputValue}
-            onChange={this.handleChange}
+  return (
+    <header>
+      <SearchForm onSubmit={handleSubmit}>
+        <a href="https://pixabay.com/" target="_blank" rel="noreferrer">
+          <SearchLogo
+            src={require('./pixabay-logo.png')}
+            alt="logo"
+            width="200"
           />
-        </SearchForm>
-      </header>
-    );
-  }
-}
+        </a>
+        <SearchButton>
+          <BsSearch />
+          <SearchSpan>Search</SearchSpan>
+        </SearchButton>
+        <SearchInput
+          name="searchName"
+          type="text"
+          id="search"
+          value={inputValue}
+          onChange={handleChange}
+        />
+      </SearchForm>
+    </header>
+  );
+};
 
 export default SearchBar;
